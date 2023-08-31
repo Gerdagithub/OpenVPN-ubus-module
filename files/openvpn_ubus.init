@@ -1,0 +1,26 @@
+#!/bin/sh /etc/rc.common
+
+USE_PROCD=1
+
+start_service() {
+    local server_ip
+    local port
+
+    config_load openvpn_ubus
+    config_get server_ip openvpn_ubus_sct 'server_ip' '-'
+    config_get port openvpn_ubus_sct 'port' '-'
+
+    procd_open_instance
+    procd_set_param command /usr/bin/openvpn_ubus -a "$server_ip" -p $port
+    procd_set_param pidfile /var/run/openvpn_ubus.pid
+    procd_close_instance
+}
+
+service_triggers() {
+    procd_add_reload_trigger openvpn_ubus
+}
+
+reload_service() {
+    stop
+    start
+}
