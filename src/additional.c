@@ -45,7 +45,6 @@ int get_common_name_of_a_client(char buffer[BUFFER_SIZE], char fromNextLine[150]
 }
 
 int get_clients_common_names(char *response) 
-
 {
     char cutFrom[78], buffer[BUFFER_SIZE], temp[BUFFER_SIZE];
     int ret = 0;
